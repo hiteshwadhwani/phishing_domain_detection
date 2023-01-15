@@ -2,4 +2,6 @@ pandas
 pymongo
 numpy
 python-dotenv
+sklearn
+stats
 -e .
