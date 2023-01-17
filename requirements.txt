@@ -2,6 +2,6 @@ pandas
 pymongo
 numpy
 python-dotenv
-sklearn
+scikit-learn
 stats
 -e .

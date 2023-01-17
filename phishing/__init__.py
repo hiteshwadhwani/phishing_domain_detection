@@ -1,3 +1,3 @@
-from phishing import config
+from dotenv import load_dotenv
 print(f"Loading environment variable from .env file")
-config()
+load_dotenv()
