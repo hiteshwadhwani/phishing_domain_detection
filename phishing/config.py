@@ -11,6 +11,8 @@ class EnvironmentVariables:
 
 my_env = EnvironmentVariables()
 
+TARGET_FEATURE = 'phishing'
+
 myclient = pymongo.MongoClient(my_env.MONGO_DB_URL)
 print(myclient)
 

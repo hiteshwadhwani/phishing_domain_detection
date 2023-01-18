@@ -34,7 +34,13 @@ class Data_ingestion_config:
         
 
 class Data_transformation_config:
-    pass
+    def __init__(self, training_pipeline_config:Training_pipeline_config):
+        self.data_transformation_dir = os.path.join(training_pipeline_config.artifact_dir, 'data_transformation')
+        self.data_transformation_obj_path = os.path.join(self.data_transformation_dir, 'transformer', 'transform_obj.pkl')
+        self.train_file_path = os.path.join(self.data_transformation_dir, 'transformed_data', 'train_arr.npz')
+        self.test_file_path = os.path.join(self.data_transformation_dir, 'transformed_data', 'test_arr.npz')
+    def to_dict(self):
+        return self.__dict__
 
 class Data_validation_config:
     pass

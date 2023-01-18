@@ -3,5 +3,7 @@ pymongo
 numpy
 python-dotenv
 scikit-learn
+pickle-mixin
 stats
+imblearn
 -e .

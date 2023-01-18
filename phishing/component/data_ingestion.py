@@ -30,7 +30,7 @@ class Data_ingestion:
             dataset_dir = os.path.dirname(self.data_ingestion_config.train_file_path)
             os.makedirs(dataset_dir, exist_ok=True)
         
-            train_df, test_df = train_test_split(df, test_size=self.data_ingestion_config.test_size)
+            train_df, test_df = train_test_split(df, test_size=self.data_ingestion_config.test_size, random_state=42)
             logging.info(f"train_df shape: {train_df.shape}, test_df shape:{test_df.shape}")
 
 
@@ -43,6 +43,6 @@ class Data_ingestion:
 
             return data_ingestion_artifact
         except Exception as e:
-            PhishingException(e, sys)
+            raise PhishingException(e, sys)
         
 

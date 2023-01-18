@@ -3,6 +3,9 @@ from phishing.config import myclient
 from phishing.logger import logging
 from phishing.exception import PhishingException
 import os,sys
+import numpy as np
+import pickle
+
 
 def get_collection_as_dataframe(database_name:str, collection_name:str)->pd.DataFrame:
     """
@@ -18,6 +21,34 @@ def get_collection_as_dataframe(database_name:str, collection_name:str)->pd.Data
             df.drop('_id', axis=1, inplace=True)
         return df
     except Exception as e:
-        PhishingException(e, sys)
+        raise PhishingException(e, sys)
 
-get_collection_as_dataframe('phishing', 'dataset')
+def save_numpy_array(file_path:str, array:np.array):
+    try:
+        file_dir = os.path.dirname(file_path)
+        os.makedirs(file_dir, exist_ok=True)
+        with open(file_path, 'wb') as file:
+            np.save(file, array)
+    except Exception as e:
+        raise PhishingException(e, sys)
+
+def save_object(file_path:str, object):
+    try:
+        file_dir = os.path.dirname(file_path)
+        os.makedirs(file_dir, exist_ok=True)
+        with open(file_path, 'wb') as f:
+            pickle.dump(object, f)
+    except Exception as e:
+        raise PhishingException(e, sys)
+
+def load_obj(file_path:str):
+    try:
+        if not os.path.exists(file_path):
+            raise Exception(f"{file_path} file path does not exist")
+        with open(file_path, 'rb') as file:
+            return pickle.load(file)
+    except Exception as e:
+        raise PhishingException(e, sys)
+    
+    
+    

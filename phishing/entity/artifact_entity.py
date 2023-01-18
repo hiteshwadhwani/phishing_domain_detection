@@ -8,7 +8,9 @@ class Data_ingestion_artifact:
 
 @dataclass
 class Data_transformation_artifact:
-    pass
+    transform_obj_file_path:str
+    train_file_path:str
+    test_file_path:str
 
 @dataclass
 class Data_validation_artifact:
