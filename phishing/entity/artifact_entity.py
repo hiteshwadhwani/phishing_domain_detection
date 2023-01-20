@@ -14,7 +14,7 @@ class Data_transformation_artifact:
 
 @dataclass
 class Data_validation_artifact:
-    pass
+    validation_report_file:str
 
 @dataclass
 class Model_builder_artifact:

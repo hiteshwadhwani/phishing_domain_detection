@@ -4,6 +4,7 @@ from phishing.logger import logging
 from phishing.exception import PhishingException
 import os,sys
 import numpy as np
+import yaml
 import pickle
 
 
@@ -47,6 +48,16 @@ def load_obj(file_path:str):
             raise Exception(f"{file_path} file path does not exist")
         with open(file_path, 'rb') as file:
             return pickle.load(file)
+    except Exception as e:
+        raise PhishingException(e, sys)
+
+def create_YAML_file(file_path:str, obj:dict):
+    try:
+        base_dir = os.path.dirname(file_path)
+        os.makedirs(base_dir, exist_ok=True)
+
+        with open(file_path, 'w') as file:
+            yaml.dump(obj, file)
     except Exception as e:
         raise PhishingException(e, sys)
     

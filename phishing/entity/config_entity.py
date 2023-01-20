@@ -43,7 +43,13 @@ class Data_transformation_config:
         return self.__dict__
 
 class Data_validation_config:
-    pass
+    def __init__(self, training_pipeline_config:Training_pipeline_config):
+        self.missing_values_threshold = 70
+        self.data_validation_dir = os.path.join(training_pipeline_config.artifact_dir, 'data_validation')
+        self.data_validation_report = os.path.join(self.data_validation_dir, 'data-validation-report.yaml')
+    
+    def to_dict(self):
+        return self.__dict__
 
 class Model_builder_config:
     pass
