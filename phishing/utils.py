@@ -33,6 +33,15 @@ def save_numpy_array(file_path:str, array:np.array):
     except Exception as e:
         raise PhishingException(e, sys)
 
+def load_numpy_arr(file_path:str):
+    try:
+        if not os.path.exists(file_path):
+            raise Exception(f"file path {file_path} does not exists")
+        with open(file_path, 'rb') as file:
+            return np.load(file)
+    except Exception as e:
+        raise PhishingException(e, sys)
+
 def save_object(file_path:str, object):
     try:
         file_dir = os.path.dirname(file_path)

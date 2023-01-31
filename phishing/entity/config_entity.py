@@ -7,6 +7,10 @@ ARTIFACT_DIR = os.path.join(os.getcwd(), 'artifact')
 FEATURE_FILE_NAME = 'phishing.csv'
 TEST_FILE_NAME = 'phishing_test.csv'
 TRAIN_FILE_NAME = 'phishing_train.csv'
+TRANSFORM_FILE_NAME = 'transform_obj.pkl'
+MODEL_FILE_NAME = 'model.pkl'
+
+
 
 class Training_pipeline_config:
     def __init__(self):
@@ -36,7 +40,7 @@ class Data_ingestion_config:
 class Data_transformation_config:
     def __init__(self, training_pipeline_config:Training_pipeline_config):
         self.data_transformation_dir = os.path.join(training_pipeline_config.artifact_dir, 'data_transformation')
-        self.data_transformation_obj_path = os.path.join(self.data_transformation_dir, 'transformer', 'transform_obj.pkl')
+        self.data_transformation_obj_path = os.path.join(self.data_transformation_dir, 'transformer', TRANSFORM_FILE_NAME)
         self.train_file_path = os.path.join(self.data_transformation_dir, 'transformed_data', 'train_arr.npz')
         self.test_file_path = os.path.join(self.data_transformation_dir, 'transformed_data', 'test_arr.npz')
     def to_dict(self):
@@ -52,11 +56,19 @@ class Data_validation_config:
         return self.__dict__
 
 class Model_builder_config:
-    pass
+    def __init__(self, training_pipeline_config):
+        self.model_builder_dir = os.path.join(training_pipeline_config.artifact_dir, 'model_builder')
+        self.threshold_train_score = 0.5
+        self.threshold_test_score = 0.5
+        self.model_file_path = os.path.join(self.model_builder_dir, MODEL_FILE_NAME)
 
 class Model_evaluation_config:
-    pass
+    def __init__(self):
+        pass
 
 class Model_pusher_config:
-    pass
+    def __init__(self, training_pipeline_config):
+        self.model_pusher_dir = os.path.join(training_pipeline_config.artifact_dir, 'model_pusher', 'saved_models')
+        self.model_pusher_model_path = os.path.join(self.model_pusher_dir, MODEL_FILE_NAME)
+        self.model_pusher_transformer_path = os.path.join(self.model_pusher_dir, TRANSFORM_FILE_NAME)
 

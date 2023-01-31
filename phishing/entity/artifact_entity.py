@@ -18,7 +18,9 @@ class Data_validation_artifact:
 
 @dataclass
 class Model_builder_artifact:
-    pass
+    model_path:str
+    train_score:float
+    test_score:float
 
 @dataclass
 class Model_evaluation_artifact:
@@ -26,5 +28,6 @@ class Model_evaluation_artifact:
 
 @dataclass
 class Model_pusher_artifact:
-    pass
+    model_path:str
+    transformer_path:str
 

@@ -8,4 +8,5 @@ stats
 imblearn
 scipy
 PyYAML
+xgboost
 -e .

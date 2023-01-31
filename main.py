@@ -6,7 +6,10 @@ from phishing.entity import config_entity
 from phishing.component.data_ingestion import Data_ingestion
 from phishing.component.data_transformation import Data_transformation
 from phishing.component.data_validation import Data_validation
+from phishing.component.model_builder import Model_builder
+from phishing.component.model_pusher import Model_pusher
 from phishing.exception import PhishingException
+from phishing.predictor import ModelResolver
 import os,sys
 
 if __name__ == "__main__":
@@ -37,6 +40,21 @@ if __name__ == "__main__":
         data_validation_artifact = data_validation_obj.intiate_data_validaiton()
         print(data_validation_artifact)
 
+        # MODEL BUILDER
+
+        model_builder_config = config_entity.Model_builder_config(training_pipeline_config=training_pipeline_config)
+        model_builder_obj = Model_builder(model_builder_config=model_builder_config, data_transformation_artifact=data_transformation_artifact)
+        model_builder_artifact = model_builder_obj.intiate_model_builder()
+        print(model_builder_artifact)
+
+        # MODEL PUSHER
+
+        model_pusher_config = config_entity.Model_pusher_config(training_pipeline_config=training_pipeline_config)
+        model_pusher_obj = Model_pusher(model_pusher_config=model_pusher_config,
+                                        data_transformation_artifact=data_transformation_artifact,
+                                        model_builder_artifact=model_builder_artifact)
+        model_pusher_artifact = model_pusher_obj.intiate_model_pusher()
+        print(model_pusher_artifact)
 
     except Exception as e:
         raise PhishingException(e,sys)
