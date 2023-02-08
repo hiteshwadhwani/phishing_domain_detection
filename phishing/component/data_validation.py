@@ -111,6 +111,8 @@ class Data_validation:
             # data_validation_artifact
             logging.info('creating data_validation artifact')
             data_validation_artifact = artifact_entity.Data_validation_artifact(validation_report_file=self.data_validation_config.data_validation_report)
+
+            logging.info(f"=================DATA VALIDATION ARTIFACT=============== : {data_validation_artifact}")
             return data_validation_artifact
         except Exception as e:
             raise PhishingException(e, sys)

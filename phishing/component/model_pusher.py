@@ -19,14 +19,15 @@ class Model_pusher:
                                             model_dir_name='model')
     def intiate_model_pusher(self):
         try:
+            logging.info(f"Importing model and transformer from path {self.model_builder_artifact.model_path}")
             model = utils.load_obj(file_path=self.model_builder_artifact.model_path)
             transformer = utils.load_obj(file_path=self.data_transformation_artifact.transform_obj_file_path)
 
-            # saving model and transformer in artifact folder
+            logging.info("saving model and transformer in artifact folder")
             utils.save_object(file_path=self.model_pusher_config.model_pusher_model_path, object=model)
             utils.save_object(file_path=self.model_pusher_config.model_pusher_transformer_path, object=transformer)
 
-            # get latest model registory model and transfoemer path
+            logging.info(f"get latest model registory model from path {self.model_resolver.get_latest_save_model_path()} and transformer from path {self.model_resolver.get_latest_save_transformer_path()}")
             model_path = self.model_resolver.get_latest_save_model_path()
             transformer_path = self.model_resolver.get_latest_save_transformer_path()
             
@@ -37,6 +38,7 @@ class Model_pusher:
             model_pusher_artifact = artifact_entity.Model_pusher_artifact(model_path=model_path,
                                                                           transformer_path=transformer_path)
 
+            logging.info(f"=============MODEL PUSHER ARTIFACT============ : {model_pusher_artifact}")
             return model_pusher_artifact
             
         except Exception as e:

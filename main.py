@@ -7,6 +7,7 @@ from phishing.component.data_ingestion import Data_ingestion
 from phishing.component.data_transformation import Data_transformation
 from phishing.component.data_validation import Data_validation
 from phishing.component.model_builder import Model_builder
+from phishing.component.model_evaluation import Model_evaluation
 from phishing.component.model_pusher import Model_pusher
 from phishing.exception import PhishingException
 from phishing.predictor import ModelResolver
@@ -46,6 +47,15 @@ if __name__ == "__main__":
         model_builder_obj = Model_builder(model_builder_config=model_builder_config, data_transformation_artifact=data_transformation_artifact)
         model_builder_artifact = model_builder_obj.intiate_model_builder()
         print(model_builder_artifact)
+
+        # MODEL EVALUATOR
+
+        model_evaluation_obj = Model_evaluation(data_transformation_artifact=data_transformation_artifact,
+                                                model_builder_artifact=model_builder_artifact,
+                                                data_ingestion_artifact=data_ingestion_artifact)
+
+        model_evaluation_artifact = model_evaluation_obj.intiate_model_evaluation()
+        print(model_evaluation_artifact)
 
         # MODEL PUSHER
 

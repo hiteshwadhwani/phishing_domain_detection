@@ -24,7 +24,8 @@ class Model_builder_artifact:
 
 @dataclass
 class Model_evaluation_artifact:
-    pass
+    model_accepted:bool
+    improved_accuracy:float
 
 @dataclass
 class Model_pusher_artifact:

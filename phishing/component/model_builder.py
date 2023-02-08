@@ -56,6 +56,8 @@ class Model_builder:
             model_builder_artifact = artifact_entity.Model_builder_artifact(model_path=self.model_builder_config.model_file_path,
             train_score=train_score, test_score=test_score)
 
+            logging.info(f"================MODEL TRAINING ARTIACT============== : {model_builder_artifact}")
+
             return model_builder_artifact
         except Exception as e:
             raise PhishingException(e, sys)

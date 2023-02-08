@@ -9,4 +9,5 @@ imblearn
 scipy
 PyYAML
 xgboost
+apache-airflow
 -e .

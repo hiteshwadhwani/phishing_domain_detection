@@ -18,7 +18,7 @@ class ModelResolver:
 
             dir_names = list(map(int, dir_names))
             latest_dir_name = max(dir_names)
-            return os.path.join(self.model_registory, latest_dir_name)
+            return os.path.join(self.model_registory, f"{latest_dir_name}")
         except Exception as e:
             raise PhishingException(e, sys)    
         
@@ -30,7 +30,7 @@ class ModelResolver:
             if latest_dir is None:
                 raise Exception("No model Found")
 
-            model_path = os.path.join(latest_dir, self.transformer_dir_name, MODEL_FILE_NAME)
+            model_path = os.path.join(latest_dir, self.model_dir_name, MODEL_FILE_NAME)
             return model_path
         except Exception as e:
             raise PhishingException(e, sys)
@@ -43,6 +43,7 @@ class ModelResolver:
                 raise Exception('No transformer found')
 
             transformer_path = os.path.join(latest_dir, self.transformer_dir_name, TRANSFORM_FILE_NAME)
+            return transformer_path
         except Exception as e:
             raise PhishingException(e, sys)
 
