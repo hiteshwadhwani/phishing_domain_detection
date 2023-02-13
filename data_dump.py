@@ -29,8 +29,8 @@ def dump_data_in_mongodb():
     url = 'https://drive.google.com/file/d/1zwUKSiaEM43A875jAUmqCKQ3ooxo8XIS/view?usp=share_link'
     url = url='https://drive.google.com/uc?id=' + url.split('/')[-2]
     df = pd.read_csv(url)
-
-    print("Rows and columns in dataset", df.shape)
+    
+    print("Rows ans column in dataset", df.shape)
 
     json_records = list(json.loads(df.T.to_json()).values())
 
