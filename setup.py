@@ -13,7 +13,6 @@ def get_requirements():
         requirement_list.remove(HYPHEN_E_DOT)
 
     return requirement_list
-
 setup(
     name="phishing",
     version="0.0.1",
