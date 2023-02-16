@@ -40,8 +40,8 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-  Build-from-ecr-image:
-    name: Continue Deployment
+  Continues-Deployment:
+    name: build-and-push-ecr-image
     runs-on: self-hosted
     steps:
       - name: Checkout
