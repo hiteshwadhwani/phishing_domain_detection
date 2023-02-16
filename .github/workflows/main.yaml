@@ -11,15 +11,15 @@ permissions:
 
 jobs:
   build-and-push-ecr-image:
-    name: Continues Delivery
+    name: Countinues Delivery
     runs-on: ubuntu-latest
     steps:
-      - name: checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
-      - name: Install utilites
+      - name: Intall Utilities
         run: |
           sudo apt-get update
-          sudo apt-get upgrade
+          sudo apt-get install -y jq unzip
       - name: configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -29,47 +29,45 @@ jobs:
       - name: Login to ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-      - name: Build, Tag and push Image to ECR
+      - name: Build Tag and Push Image to ECR
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
           IMAGE_TAG: latest
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-
   Continues-Deployment:
-    name: build-and-push-ecr-image
+    needs: build-and-push-ecr-image
     runs-on: self-hosted
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3  
-      - name: Configure AWS credentials
+      - name:  Checkout
+        uses: actions/checkout@v3
+      
+      - name: configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - name: Install utilites
+      - name: Install Utilities
         run: |
           sudo apt-get update
           sudo apt-get install -y jq unzip
-      - name: login to ECR
+      - name: Login to ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
       
-      - name: pull docker image
+      - name: Pull Docker Image
         run: |
           docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{secrets.ECR_REPOSITORY_NAME}}:latest
-      
-      - name: Run docker image and serve to users
+      - name: Run docker Image and serve to users
         run: |
           export IMAGE_NAME="${{secrets.AWS_ECR_LOGIN_URI}}/${{secrets.ECR_REPOSITORY_NAME}}:latest" AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY }}" AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" AWS_DEFAULT_REGION="${{ secrets.AWS_REGION }}" MONGO_DB_URL="${{ secrets.MONGO_DB_URL }}" BUCKET_NAME="${{ secrets.BUCKET_NAME }}" && docker compose up -d
-        
+      
       - name: Docker system prune to remove old images
         run: |
           docker system prune -f
-
-
+      
