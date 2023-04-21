@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-
 @dataclass
 class EnvironmentVariables:
     MONGO_DB_URL = os.getenv("MONGO_DB_URL")
